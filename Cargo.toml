@@ -3,6 +3,20 @@ name = "memory"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+path = "src/main.rs"
+crate-type = ["cdylib"]
 
 [dependencies]
+cargo-cmd = "0.3.1"
+rand = "0.8.5"
+slint = "1.0.0"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = { version = "0.2.84" }
+getrandom = { version = "0.2.9", features = ["js"] }
+
+[package.metadata.commands]
+build-web = "wasm-pack build --target web"
+build-web-release = "wasm-pack build --release --target web"
+start-server = "python3 -m http.server"
